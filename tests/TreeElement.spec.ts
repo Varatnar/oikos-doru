@@ -12,22 +12,47 @@ const addDepthTo = (element: TreeElement<string>, depthness: number): TreeElemen
     addDepthTo(newElement, depthness - 1);
 };
 
-describe("TreeElement depth", () => {
+describe("TreeElement", () => {
 
     const tree = new TreeElement(DATA_FILLER);
     addDepthTo(tree, 10);
 
-    it("should have proper depth of 0 on root", () => {
-        expect(tree.getDepth()).to.equal(0);
+    describe("with depth", () => {
+        it("should have proper depth of 0 on root", () => {
+            expect(tree.getDepth()).to.equal(0);
+        });
+
+        it("should have proper depth of +1 on child", () => {
+            expect(tree.getChildren()[0].getDepth()).to.equal(1);
+        });
+
+        it("should have proper depth on all children", () => {
+            tree.forEach(((element) => {
+                expect(element.getDepth()).to.equals(element.getParent().getDepth() + 1);
+            }));
+        });
     });
 
-    it("should have proper depth of +1 on child", () => {
-        expect(tree.getChildren()[0].getDepth()).to.equal(1);
+    describe("iteration", () => {
+        it("should iterate through all child element with foreach", () => {
+            let counter = 0;
+
+            tree.forEach((() => {
+                counter++;
+            }));
+
+            expect(counter).to.equals(10);
+        });
+
+        it("should iterate through all child element with for of", () => {
+            let counter = 0;
+
+            for (const element of tree) {
+                counter++;
+            }
+
+            expect(counter).to.equals(10);
+        });
     });
 
-    it("should have proper depth on all children", () => {
-        tree.forEach(((element) => {
-            expect(element.getDepth()).to.equals(element.getParent().getDepth() + 1);
-        }));
-    });
 });
