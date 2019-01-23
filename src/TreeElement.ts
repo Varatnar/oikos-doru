@@ -48,7 +48,7 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         return this.children;
     }
 
-    public clearChildren() {
+    public clearChildren(): void {
         this.children = [];
     }
 
@@ -60,14 +60,13 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         this.parent = parent;
     }
 
-    public forEach(callback: (element: TreeElement<T>) => void, thisArg?: any) {
+    public forEach(callback: (element: TreeElement<T>) => void, thisArg?: any): void {
         thisArg = thisArg || undefined;
 
         this.forEachLoop(callback, this.children, thisArg);
-
     }
 
-    private forEachLoop(callback: (element: TreeElement<T>) => void, loopElement: Array<TreeElement<T>>, thisArg?: any) {
+    private forEachLoop(callback: (element: TreeElement<T>) => void, loopElement: Array<TreeElement<T>>, thisArg?: any): void {
         thisArg = thisArg || undefined;
 
         for (const child of loopElement) {
