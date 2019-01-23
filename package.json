@@ -2,7 +2,15 @@
   "name": "oikos-doru",
   "version": "0.5.0",
   "description": "Library exposing a Tree object with parent and child relationship.",
-  "keywords": ["javascript", "typescript", "tree", "child", "children", "parent", "oikos-doru"],
+  "keywords": [
+    "javascript",
+    "typescript",
+    "tree",
+    "child",
+    "children",
+    "parent",
+    "oikos-doru"
+  ],
   "main": "bin/TreeElement.js",
   "types": "bin/TreeElement.d.ts",
   "scripts": {
