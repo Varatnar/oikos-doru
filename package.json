@@ -1,0 +1,19 @@
+{
+  "name": "parent-child-tree-node",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist",
+  "scripts": {
+    "build": "tsc",
+    "dts": "dts-gen -m /TreeElement.js"
+  },
+  "author": "Philippe Leclerc",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^10.11.4",
+    "dts-gen": "^0.5.7",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
+  }
+}
