@@ -11,6 +11,14 @@
   },
   "author": "Philippe Leclerc",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Varatnar/oikos-doru.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Varatnar/oikos-doru/issues"
+  },
+  "homepage": "https://github.com/Varatnar/oikos-doru",
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
