@@ -6,18 +6,28 @@ const DATA_FILLER = "dataFiler";
 
 describe("TreeElement depth", () => {
 
-    it("should have proper depth on children", () => {
-        const tree = generateTree();
+    const tree = new TreeElement(DATA_FILLER);
+    addDepthTo(tree, 10);
+
+    it("should have proper depth of 0 on root", () => {
         expect(tree.getDepth()).to.equal(0);
-        expect(tree.getChildren()[0].getDepth()).to.equals(1);
     });
 
+    it("should have proper depth of +1 on child", () => {
+        expect(tree.getChildren()[0].getDepth()).to.equal(1);
+    });
+
+    it("should have proper depth on all children", () => {
+        tree.forEach(((element) => {
+            expect(element.getDepth()).to.equals(element.getParent().getDepth() + 1);
+        }));
+    });
 });
 
-function generateTree(): TreeElement<string> {
-    const element = new TreeElement(DATA_FILLER);
-
-    element.addDataChild(DATA_FILLER);
-
-    return element;
+function addDepthTo(element: TreeElement<string>, depthness: number): TreeElement<string> {
+    if (depthness === 0) {
+        return element;
+    }
+    const newElement = element.addChild(new TreeElement(DATA_FILLER));
+    addDepthTo(newElement, depthness - 1);
 }
