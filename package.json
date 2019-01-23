@@ -1,6 +1,6 @@
 {
   "name": "oikos-doru",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "",
   "main": "bin/TreeElement.js",
   "types": "bin/TreeElement.d.ts",
