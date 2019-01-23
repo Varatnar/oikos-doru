@@ -5,10 +5,12 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
     private parent?: TreeElement<T>;
     private readonly data: T;
     private children: Array<TreeElement<T>>;
+    private readonly depth: number;
 
-    constructor(data: T) {
+    constructor(data: T, depth: number = 0) {
         this.data = data;
         this.children = [];
+        this.depth = depth;
     }
 
     public* [Symbol.iterator](): Iterator<TreeElement<T>> {
@@ -32,12 +34,30 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         return !this.parent;
     }
 
+    public getDepth(): number {
+        return this.depth;
+    }
+
     public getData(): T {
         return this.data;
     }
 
-    public addChild(newData: T): TreeElement<T> {
-        const child = new TreeElement<T>(newData);
+    public addDataChild(newData: T): TreeElement<T> {
+        const child = new TreeElement<T>(newData, this.depth + 1);
+        child.setParent(this);
+        this.children.push(child);
+
+        return child;
+    }
+
+    /**
+     *  Only retrieves its data!
+     *
+     * @param newChild
+     */
+    public addChild(newChild: TreeElement<T>): TreeElement<T> {
+
+        const child = new TreeElement<T>(newChild.getData(), this.depth + 1);
         child.setParent(this);
         this.children.push(child);
 
