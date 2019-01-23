@@ -4,6 +4,14 @@ import { TreeElement } from "../src/TreeElement";
 
 const DATA_FILLER = "dataFiler";
 
+const addDepthTo = (element: TreeElement<string>, depthness: number): TreeElement<string> => {
+    if (depthness === 0) {
+        return element;
+    }
+    const newElement = element.addChild(new TreeElement(DATA_FILLER));
+    addDepthTo(newElement, depthness - 1);
+};
+
 describe("TreeElement depth", () => {
 
     const tree = new TreeElement(DATA_FILLER);
@@ -23,11 +31,3 @@ describe("TreeElement depth", () => {
         }));
     });
 });
-
-function addDepthTo(element: TreeElement<string>, depthness: number): TreeElement<string> {
-    if (depthness === 0) {
-        return element;
-    }
-    const newElement = element.addChild(new TreeElement(DATA_FILLER));
-    addDepthTo(newElement, depthness - 1);
-}
