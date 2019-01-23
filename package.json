@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "bin/TreeElement.js",
-  "types": "bin/index.d.ts",
+  "types": "bin/TreeElement.d.ts",
   "scripts": {
     "build": "tsc"
   },
