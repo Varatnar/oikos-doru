@@ -1,6 +1,3 @@
-/* tslint:disable:member-ordering */
-
-// to group generator function
 export class TreeElement<T> implements Iterable<TreeElement<T>> {
     private parent?: TreeElement<T>;
     private readonly data: T;
