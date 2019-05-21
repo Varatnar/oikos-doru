@@ -107,4 +107,21 @@ describe("TreeElement", () => {
 
     });
 
+    describe("type casting", () => {
+        // todo: not exhaustive
+        it("should be able to cast from list of given type", () => {
+            const newTree = new TreeElement<string | number>(DATA_FILLER);
+
+            expect(newTree.getData<string>().toUpperCase()).to.equal(DATA_FILLER.toUpperCase());
+        });
+
+        // limitation : Can attempt casting to wrong type
+        it("should throw when using method on bad casting", () => {
+            const newTree = new TreeElement<string | number>(DATA_FILLER);
+            expect(() => {
+                newTree.getData<number>().toExponential();
+            }).to.throw(TypeError);
+        });
+    });
+
 });

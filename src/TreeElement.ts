@@ -35,8 +35,8 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         return this.depth;
     }
 
-    public getData(): T {
-        return this.data;
+    public getData<R extends T = T>(): R {
+        return this.data as R;
     }
 
     public addDataChild(newData: T): TreeElement<T> {
