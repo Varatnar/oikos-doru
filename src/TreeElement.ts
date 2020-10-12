@@ -10,11 +10,13 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         this.depth = depth;
     }
 
-    public* [Symbol.iterator](): Iterator<TreeElement<T>> {
+    public *[Symbol.iterator](): Iterator<TreeElement<T>> {
         yield* this.next(this.children);
     }
 
-    private* next(data: Array<TreeElement<T>>): IterableIterator<TreeElement<T>> {
+    private *next(
+        data: Array<TreeElement<T>>
+    ): IterableIterator<TreeElement<T>> {
         for (const child of data) {
             yield child;
             if (child.getChildren().length > 0) {
@@ -53,7 +55,6 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
      * @param newChild
      */
     public addChild(newChild: TreeElement<T>): TreeElement<T> {
-
         const child = new TreeElement<T>(newChild.getData(), this.depth + 1);
         child.setParent(this);
         this.children.push(child);
@@ -77,13 +78,20 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         this.parent = parent;
     }
 
-    public forEach(callback: (element: TreeElement<T>) => void, thisArg?: any): void {
+    public forEach(
+        callback: (element: TreeElement<T>) => void,
+        thisArg?: any
+    ): void {
         thisArg = thisArg || undefined;
 
         this.forEachLoop(callback, this.children, thisArg);
     }
 
-    private forEachLoop(callback: (element: TreeElement<T>) => void, loopElement: Array<TreeElement<T>>, thisArg?: any): void {
+    private forEachLoop(
+        callback: (element: TreeElement<T>) => void,
+        loopElement: Array<TreeElement<T>>,
+        thisArg?: any
+    ): void {
         thisArg = thisArg || undefined;
 
         for (const child of loopElement) {

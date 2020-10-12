@@ -1,43 +1,60 @@
 {
-  "name": "@varatnar/oikos-doru",
-  "version": "0.5.1",
-  "description": "Library exposing a Tree object with parent and child relationship.",
-  "keywords": [
-    "javascript",
-    "typescript",
-    "tree",
-    "child",
-    "children",
-    "parent",
-    "oikos-doru"
-  ],
-  "main": "bin/TreeElement.js",
-  "types": "bin/TreeElement.d.ts",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "build": "tsc",
-    "test": "mocha -r ts-node/register tests/**/*.spec.ts"
-  },
-  "author": "Philippe Leclerc",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Varatnar/oikos-doru.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Varatnar/oikos-doru/issues"
-  },
-  "homepage": "https://github.com/Varatnar/oikos-doru",
-  "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
-    "@types/node": "^10.11.4",
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.1"
-  }
+    "name": "@varatnar/oikos-doru",
+    "version": "0.5.1",
+    "description": "Library exposing a Tree object with parent and child relationship.",
+    "keywords": [
+        "javascript",
+        "typescript",
+        "tree",
+        "child",
+        "children",
+        "parent",
+        "oikos-doru"
+    ],
+    "main": "bin/TreeElement.js",
+    "types": "bin/TreeElement.d.ts",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "prepublish": "yarn build",
+        "build": "rimraf bin && tsc",
+        "test": "jest",
+        "lint": "eslint \"*/**/*.{js,ts,tsx}\" --fix"
+    },
+    "author": "Philippe Leclerc",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Varatnar/oikos-doru.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Varatnar/oikos-doru/issues"
+    },
+    "homepage": "https://github.com/Varatnar/oikos-doru",
+    "devDependencies": {
+        "@types/jest": "^26.0.14",
+        "@types/node": "12.12.67",
+        "@typescript-eslint/eslint-plugin": "^4.4.0",
+        "@typescript-eslint/parser": "^4.4.0",
+        "eslint": "^7.11.0",
+        "eslint-config-prettier": "^6.12.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "husky": "^4.3.0",
+        "jest": "^26.5.3",
+        "lint-staged": "^10.4.0",
+        "prettier": "^2.1.2",
+        "rimraf": "^3.0.2",
+        "ts-jest": "^26.4.1",
+        "ts-node": "^9.0.0",
+        "typescript": "^4.0.3"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,ts}": "eslint"
+    }
 }

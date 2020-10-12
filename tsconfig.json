@@ -1,19 +1,16 @@
 {
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "removeComments": true,
-    "sourceMap": false,
-    "outDir": "./bin",
-    "declaration": true,
-    "module": "commonjs",
-    "lib": [
-      "es2016",
-      "dom"
-    ]
-  },
-  "include": [
-    "src/**/*.ts"
-  ]
+    "compilerOptions": {
+        "rootDir": "src",
+        "outDir": "bin",
+        "declaration": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "target": "es6",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "sourceMap": false,
+        "module": "commonjs",
+        "lib": ["es2016"]
+    },
+    "exclude": ["**/*/**.spec.ts", "bin"]
 }
