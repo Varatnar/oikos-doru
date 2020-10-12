@@ -1,6 +1,6 @@
 {
     "name": "@varatnar/oikos-doru",
-    "version": "0.5.1",
+    "version": "1.0.0",
     "description": "Library exposing a Tree object with parent and child relationship.",
     "keywords": [
         "javascript",
