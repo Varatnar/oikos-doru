@@ -1,6 +1,6 @@
 {
     "name": "@varatnar/oikos-doru",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Library exposing a Tree object with parent and child relationship.",
     "keywords": [
         "javascript",
@@ -11,13 +11,9 @@
         "parent",
         "oikos-doru"
     ],
-    "main": "bin/TreeElement.js",
-    "types": "bin/TreeElement.d.ts",
-    "directories": {
-        "test": "tests"
-    },
+    "main": "dist/TreeElement.js",
+    "types": "dist/TreeElement.d.ts",
     "scripts": {
-        "prepublish": "yarn build",
         "build": "rimraf bin && tsc",
         "test": "jest",
         "lint": "eslint \"*/**/*.{js,ts,tsx}\" --fix"
