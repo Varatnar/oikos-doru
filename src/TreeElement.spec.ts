@@ -38,11 +38,76 @@ describe('TreeElement', () => {
 
             expect(counter).toEqual(10);
         });
+
+        it('should iterate in the correct order', () => {
+            const newTree = new TreeElement('root');
+
+            const A = 'layerOne_a';
+            const B = 'layerOne_b';
+            const C = 'layerTwo_a';
+            const D = 'layerTwo_b';
+
+            const expectedGenerator = function* () {
+                yield A;
+                yield C;
+                yield D;
+                yield B;
+            };
+
+            const expected = expectedGenerator();
+
+            const childOneA = newTree.addChild(A);
+            newTree.addChild(B);
+
+            childOneA.addChild(C);
+            childOneA.addChild(D);
+
+            for (const child of newTree) {
+                expect(child.toString()).toEqual(expected.next().value);
+            }
+        });
+
+        it('should iterate in the correct order foreach', () => {
+            const newTree = new TreeElement('root');
+
+            const A = 'layerOne_a';
+            const B = 'layerOne_b';
+            const C = 'layerTwo_a';
+            const D = 'layerTwo_b';
+
+            const expectedGenerator = function* () {
+                yield A;
+                yield C;
+                yield D;
+                yield B;
+            };
+
+            const expected = expectedGenerator();
+
+            const childOneA = newTree.addChild(A);
+            newTree.addChild(B);
+
+            childOneA.addChild(C);
+            childOneA.addChild(D);
+
+            newTree.forEach((child) => {
+                expect(child.toString()).toEqual(expected.next().value);
+            });
+        });
     });
 
     describe('basics', () => {
         it('should be possible to access wrapped data', () => {
             expect(tree.getData()).toEqual(DATA_FILLER);
+        });
+
+        it('should be possible to access parent data from child', () => {
+            const newTree = new TreeElement(DATA_FILLER);
+            const child = newTree.addChild('someData');
+
+            const parent = child.getParent();
+
+            expect(parent).toEqual(newTree);
         });
 
         it('should be possible to remove all children', () => {
@@ -89,6 +154,32 @@ describe('TreeElement', () => {
         });
     });
 
+    describe('toString', () => {
+        it.each([
+            [' string', 'i am a string', 'i am a string'],
+            [' number', 124, '124'],
+            [' boolean', true, 'true'],
+            [
+                'n object',
+                { alpha: 'string', beta: 432, gamma: false },
+                '{"alpha":"string","beta":432,"gamma":false}',
+            ],
+        ])(
+            'should be possible to get the string if the data is a%s',
+            (_, input, expected) => {
+                const tree = new TreeElement(input);
+
+                expect(tree.toString()).toEqual(expected);
+            }
+        );
+
+        it('should throw if the data is a function', () => {
+            const tree = new TreeElement(() => 4);
+
+            expect(() => tree.toString()).toThrow(Error);
+        });
+    });
+
     describe('type casting', () => {
         // todo: not exhaustive
         it('should be able to cast from list of given type', () => {
@@ -106,11 +197,5 @@ describe('TreeElement', () => {
                 newTree.getData<number>().toExponential();
             }).toThrow(TypeError);
         });
-    });
-
-    it('should work', () => {
-        const tree = new TreeElement('muh string');
-
-        tree.addChild(new TreeElement('test ?'));
     });
 });
