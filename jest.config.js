@@ -9,7 +9,6 @@ module.exports = {
         '^.+\\.(ts|js|html)$': 'ts-jest',
     },
     collectCoverage: true,
-    coverageReporters: ['html'],
     coverageDirectory: 'coverage',
     moduleFileExtensions: ['ts', 'js', 'html'],
     moduleNameMapper: {
