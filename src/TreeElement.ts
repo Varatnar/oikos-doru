@@ -1,5 +1,3 @@
-import { type } from 'os';
-
 export class TreeElement<T> implements Iterable<TreeElement<T>> {
     private parent?: TreeElement<T>;
     private readonly data: T;
@@ -25,6 +23,9 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         }
     }
 
+    /**
+     * Returns the data as string of the element
+     */
     public toString(): string {
         if (typeof this.data === 'string') {
             return this.data;
@@ -42,10 +43,17 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         );
     }
 
+    /**
+     * Boolean if this is the root of the tree (no parent)
+     */
     public isRoot(): boolean {
         return this.parent == null;
     }
 
+    /**
+     * Retrieve the data of the element, possible to attempt to cast
+     * it `getData<castType>()`
+     */
     public getData<R extends T = T>(): R {
         return this.data as R;
     }
@@ -79,14 +87,25 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
         return newChild;
     }
 
+    /**
+     * Retrieve the array of children TreeElement
+     */
     public getChildren(): Array<TreeElement<T>> {
         return this.children;
     }
 
+    /**
+     * Reset the array of children
+     */
     public clearChildren(): void {
         this.children.length = 0;
     }
 
+    /**
+     * Retrieve the parent of this element if there is one.
+     *
+     * @return TreeElement | undefined
+     */
     public getParent(): TreeElement<T> | undefined {
         return this.parent;
     }
