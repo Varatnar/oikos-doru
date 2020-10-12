@@ -1,6 +1,12 @@
-name: Test and cover
+name: build
 on:
     push:
+        branches:
+            - master
+    pull_request:
+        types:
+            - opened
+            - synchronize
         branches:
             - master
 jobs:
