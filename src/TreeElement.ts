@@ -1,13 +1,13 @@
+import { type } from 'os';
+
 export class TreeElement<T> implements Iterable<TreeElement<T>> {
     private parent?: TreeElement<T>;
     private readonly data: T;
-    private children: Array<TreeElement<T>>;
-    private readonly depth: number;
+    private readonly children: Array<TreeElement<T>>;
 
-    constructor(data: T, depth: number = 0) {
+    constructor(data: T) {
         this.data = data;
         this.children = [];
-        this.depth = depth;
     }
 
     public *[Symbol.iterator](): Iterator<TreeElement<T>> {
@@ -26,40 +26,57 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
     }
 
     public toString(): string {
-        return this.data.toString();
+        if (typeof this.data === 'string') {
+            return this.data;
+        } else if (
+            typeof this.data === 'boolean' ||
+            typeof this.data === 'number'
+        ) {
+            return this.data.toString();
+        } else if (typeof this.data === 'object') {
+            return JSON.stringify(this.data);
+        }
+
+        throw new Error(
+            'Unexpected error when attempting to convert to string'
+        );
     }
 
     public isRoot(): boolean {
-        return !this.parent;
-    }
-
-    public getDepth(): number {
-        return this.depth;
+        return this.parent == null;
     }
 
     public getData<R extends T = T>(): R {
         return this.data as R;
     }
 
-    public addDataChild(newData: T): TreeElement<T> {
-        const child = new TreeElement<T>(newData, this.depth + 1);
-        child.setParent(this);
-        this.children.push(child);
-
-        return child;
-    }
-
     /**
-     *  Only retrieves its data!
+     * Takes the parameter and wraps it in a TreeElement before
+     * adding it to the current TreeElement as a child
      *
-     * @param newChild
+     * @param child An element to add as a child
      */
-    public addChild(newChild: TreeElement<T>): TreeElement<T> {
-        const child = new TreeElement<T>(newChild.getData(), this.depth + 1);
-        child.setParent(this);
-        this.children.push(child);
+    public addChild(child: T): TreeElement<T>;
+    /**
+     * Add the TreeElement (with all its own children) as a child
+     * to the current TreeElement.
+     *
+     * @param child A tree element to add as a child
+     */
+    public addChild(child: TreeElement<T>): TreeElement<T>;
+    public addChild(child: TreeElement<T> | T): TreeElement<T> {
+        if (child instanceof TreeElement) {
+            child.setParent(this);
+            this.children.push(child);
 
-        return child;
+            return child;
+        }
+
+        const newChild = new TreeElement(child);
+        newChild.setParent(this);
+        this.children.push(newChild);
+
+        return newChild;
     }
 
     public getChildren(): Array<TreeElement<T>> {
@@ -67,10 +84,10 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
     }
 
     public clearChildren(): void {
-        this.children = [];
+        this.children.length = 0;
     }
 
-    public getParent(): TreeElement<T> {
+    public getParent(): TreeElement<T> | undefined {
         return this.parent;
     }
 
@@ -80,7 +97,7 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
 
     public forEach(
         callback: (element: TreeElement<T>) => void,
-        thisArg?: any
+        thisArg?: unknown
     ): void {
         thisArg = thisArg || undefined;
 
@@ -90,7 +107,7 @@ export class TreeElement<T> implements Iterable<TreeElement<T>> {
     private forEachLoop(
         callback: (element: TreeElement<T>) => void,
         loopElement: Array<TreeElement<T>>,
-        thisArg?: any
+        thisArg?: unknown
     ): void {
         thisArg = thisArg || undefined;
 

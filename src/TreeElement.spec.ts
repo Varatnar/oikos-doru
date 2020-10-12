@@ -5,7 +5,7 @@ const DATA_FILLER = 'dataFiler';
 const addDepthTo = (
     element: TreeElement<string>,
     depthness: number
-): TreeElement<string> => {
+): TreeElement<string> | undefined => {
     if (depthness === 0) {
         return element;
     }
@@ -17,26 +17,8 @@ describe('TreeElement', () => {
     const tree = new TreeElement(DATA_FILLER);
     addDepthTo(tree, 10);
 
-    describe('with depth', () => {
-        it('should have proper depth of 0 on root', () => {
-            expect(tree.getDepth()).toEqual(0);
-        });
-
-        it('should have proper depth of +1 on child', () => {
-            expect(tree.getChildren()[0].getDepth()).toEqual(1);
-        });
-
-        it('should have proper depth on all children', () => {
-            tree.forEach((element) => {
-                expect(element.getDepth()).toEqual(
-                    element.getParent().getDepth() + 1
-                );
-            });
-        });
-    });
-
     describe('iteration', () => {
-        it('should iterate through all child element with foreach', () => {
+        it('should iterate through all child treeElement with foreach', () => {
             let counter = 0;
 
             tree.forEach(() => {
@@ -46,7 +28,7 @@ describe('TreeElement', () => {
             expect(counter).toEqual(10);
         });
 
-        it('should iterate through all child element with for of', () => {
+        it('should iterate through all child treeElement with for of', () => {
             let counter = 0;
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -74,11 +56,11 @@ describe('TreeElement', () => {
             expect(newTree.getChildren().length).toEqual(0);
         });
 
-        it('should return true for root on root element', () => {
+        it('should return true for root on root treeElement', () => {
             expect(tree.isRoot()).toEqual(true);
         });
 
-        it('should return false for non root element', () => {
+        it('should return false for non root treeElement', () => {
             tree.forEach((child) => {
                 expect(child.isRoot()).toEqual(false);
             });
@@ -100,7 +82,7 @@ describe('TreeElement', () => {
 
             expect(newTree.getChildren().length).toEqual(0);
 
-            newTree.addDataChild(DATA_FILLER);
+            newTree.addChild(DATA_FILLER);
 
             expect(newTree.getChildren().length).toEqual(1);
             expect(newTree.getChildren()[0].getData()).toEqual(DATA_FILLER);
@@ -118,11 +100,17 @@ describe('TreeElement', () => {
         });
 
         // limitation : Can attempt casting to wrong type
-        // it("should throw when using method on bad casting", () => {
-        //     const newTree = new TreeElement<string | number>(DATA_FILLER);
-        //     expect(() => {
-        //         newTree.getData<number>().toExponential();
-        //     }).to.throw(TypeError);
-        // });
+        it('should throw when using method on bad casting', () => {
+            const newTree = new TreeElement<string | number>(DATA_FILLER);
+            expect(() => {
+                newTree.getData<number>().toExponential();
+            }).toThrow(TypeError);
+        });
+    });
+
+    it('should work', () => {
+        const tree = new TreeElement('muh string');
+
+        tree.addChild(new TreeElement('test ?'));
     });
 });
